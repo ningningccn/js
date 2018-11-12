@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" class="num1">
+    
+    
+    
+    <input type="button" class="btn" value='按此計算'>
+
+    <br>
+
+    數值X 1.618
+    =
+    <span class='total'></span>
+    <br>
+    數值X 0.618
+    =
+    <span class='total2'></span>
+    <script>
+    var num1 =document.querySelector('.num1');
+    // var num2 =document.querySelector('.num2');
+    var btn  =document.querySelector('.btn');
+    var total = document.querySelector('.total');
+    var total2 = document.querySelector('.total2');
+
+    btn.addEventListener('click',function(){
+      var num11 = parseInt(num1.value);
+    //   var num22 = parseInt(num2.value);
+      var totals = num11 * 1.618;
+      var totals2 = num11 * 0.618;
+      total.textContent = totals;
+      total2.textContent = totals2;
+
+    })
+
+    </script>
+</body>
+</html>

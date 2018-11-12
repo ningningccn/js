@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <select class="area" >
+        <option value="全部">全部</option>
+        <option value="前鎮區">前鎮區</option>
+        <option value="左營區">左營區</option>
+        <option value="楠梓區">楠梓區</option>
+        <option value="三民區">三民區</option>
+        <option value="小港區">小港區</option>
+        <option value="新興區">新興區</option>
+        <option value="岡山區">岡山區</option>
+        <option value="鳥松區">鳥松區</option>
+        <option value="鼓山區">鼓山區</option>
+        <option value="苓雅區">苓雅區</option>
+        <option value="鳳山區">鳳山區</option>
+        <option value="前金區">前金區</option>
+         
+      </select>
+      
+      <select class="cases">
+        <option value="號誌故障">號誌故障</option>
+        <option value="路面坑洞">路面坑洞</option>
+        <option value="噪音">噪音</option>
+        <option value=""></option>
+        <option value=""></option>
+      </select>
+      
+      <h4 class="show"></h4>
+      <script>
+      var xhr = new XMLHttpRequest();
+        xhr.open('get','https://work1999.kcg.gov.tw/open1999/ServiceRequestsQuery.asmx/ServiceRequestsQuery',true);
+        xhr.onload = function(){
+          var data = JSON.parse(xhr.responseText);
+        
+        
+          var area=document.querySelector('.area');
+          var cases=document.querySelector('.cases');
+          var show=document.querySelector('.show');
+          var total = {};
+          
+        }
+          var str = '';
+          for(var i = 0;data.length>i;i++){
+            var content = data[i].ZipName_ && data[i].InformDesc_
+            if(total[content] == undefined){
+               total[content] = 1;
+             }
+             else{
+               total[content] += 1;
+             }
+            str+= '<li>'+data[i].address_+'</li>';
+          }
+          show.innerHTML = str;
+          ////////////////////////////////////////////////////////////////////
+          area.addEventListener('change',function(e){
+            var str = '<p>' + area.value+ +'共有' + total[area.value]  + '處</p><ul>';
+            
+            for(var i=0;i<data.length;i++){
+              if(data[i].ZipName_== area.value){
+                str += '<li>'+'地點:  ' +data[i].address_ +'<p>'+'報案情況:  '+data[i].BeforeDesc_ +'</p>'+'</li>';
+              }
+            }
+            show.innerHTML=str;
+          })
+          
+          cases.addEventListener('change',function(e){
+             var str = '<p>' + area.value+' '+ cases.value +'共有' + total[area.value&& cases.value]  + '處</p><ul>';
+            for(var i=0;i<data.length;i++){
+              if(data[i].ZipName_== area.value&& data[i].InformDesc_==cases.value){
+                str += '<li>'+'地點:  ' +data[i].address_ +'<p>'+'報案情況:  '+data[i].BeforeDesc_ +'</p>'+'</li>';
+              }
+            }
+            show.innerHTML=str;
+          })</script>
+</body>
+</html>
